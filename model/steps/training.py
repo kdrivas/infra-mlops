@@ -3,7 +3,9 @@
 """
 import os
 import joblib
+from datetime import datetime
 import json
+import shutil
 import pandas as pd
 import logging
 from sklearn.model_selection import GridSearchCV
@@ -77,7 +79,8 @@ def training_model(path: str, dry_run: bool = False) -> None:
     # Prediction pipeline
     pipe = Pipeline(
         [
-            # Moving the standardScaler to the data processing pipeline causes problems of reproducibility
+            # Moving the standardScaler to the data processing pipeline causes problems
+            # of reproducibility
             ("scale", StandardScaler()),
             ("selector", SelectKBest(mutual_info_regression, k=params["selector__k"])),
             ("poly", PolynomialFeatures(degree=params["poly__degree"])),
@@ -106,10 +109,21 @@ def training_model(path: str, dry_run: bool = False) -> None:
         logger.info("Skipping saving")
     else:
         logger.info("Saving best parameters")
-        with open(os.path.join(ARTIFACT_DIR, "model_metrics.json"), "w") as f:
+        # If there's a previous trained model, first save the previous version
+        if os.path.exists(os.path.join(ARTIFACT_DIR, "model/model_metrics.json")):
+            history_artifacts_dir = os.path.join(ARTIFACT_DIR, "model/history", datetime.now())
+            os.makedirs(history_artifacts_dir)
+            shutil.copyfile(
+                os.path.join(ARTIFACT_DIR, "model/model_metrics.json"), history_artifacts_dir
+            )
+            shutil.copyfile(
+                os.path.join(ARTIFACT_DIR, "model/model_staging.pkl"), history_artifacts_dir
+            )
+
+        with open(os.path.join(ARTIFACT_DIR, "model/model_metrics.json"), "w") as f:
             json.dump(metrics, f, indent=4)
 
-        joblib.dump(pipe, os.path.join(ARTIFACT_DIR, "model_staging.pkl"))
+        joblib.dump(pipe, os.path.join(ARTIFACT_DIR, "model/model_staging.pkl"))
 
 
 def validate_promote_model(artifact_path: str) -> None:
