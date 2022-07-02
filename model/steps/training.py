@@ -5,6 +5,7 @@ import os
 import joblib
 from datetime import datetime
 import json
+import fire
 import shutil
 import pandas as pd
 import logging
@@ -27,10 +28,12 @@ def hypertune_model(path: str, dry_run: bool = False) -> None:
     This function will train the model using the preprocessed data (train and test sets)
     Once the model is trained, the metrics and the serialized model is stored in the artifact_path
     """
+    logger.info("=======================================================")
     if dry_run:
         logger.info("Dry run activated - Running hypertune")
     else:
         logger.info("Dry run is not activated - Running hypertune")
+    logger.info("=======================================================")
 
     train = pd.read_csv(os.path.join(path, FEATURE_DIR, "train.csv"))
 
@@ -43,20 +46,22 @@ def hypertune_model(path: str, dry_run: bool = False) -> None:
             ("model", Ridge()),
         ]
     )
+    logger.info(f"The current pipeline is:\n {pipe}")
 
     X_train, y_train = train.drop(TARGET_COL, axis=1), train[TARGET_COL]
 
     grid = GridSearchCV(estimator=pipe, param_grid=PARAM_GRID, cv=3, scoring="r2")
+
     logger.info("Fitting the model")
     grid.fit(X_train, y_train)
     best_params = grid.best_params_
+    logger.info(f"Best params: {best_params}")
 
-    logger.info("Best params:", best_params)
     if dry_run:
         logger.info("Skipping saving")
     else:
         logger.info("Saving best parameters")
-        with open(os.path.join(ARTIFACT_DIR, "best_params.json"), "w") as f:
+        with open(os.path.join(ARTIFACT_DIR, "params/best_params.json"), "w") as f:
             json.dump(best_params, f, indent=4)
 
 
@@ -65,15 +70,17 @@ def training_model(path: str, dry_run: bool = False) -> None:
     This function will train the model using the preprocessed data (train and test sets)
     Once the model is trained, the metrics and the serialized model is stored in the artifact_path
     """
+    logger.info("=======================================================")
     if dry_run:
         logger.info("Dry run activated - Running training")
     else:
         logger.info("Dry run is not activated - Running training")
+    logger.info("=======================================================")
 
     train = pd.read_csv(os.path.join(path, FEATURE_DIR, "train.csv"))
     test = pd.read_csv(os.path.join(path, FEATURE_DIR, "test.csv"))
 
-    with open(os.path.join(ARTIFACT_DIR, "best_params.json")) as f:
+    with open(os.path.join(ARTIFACT_DIR, "params/best_params.json")) as f:
         params = json.load(f)
 
     # Prediction pipeline
@@ -87,10 +94,12 @@ def training_model(path: str, dry_run: bool = False) -> None:
             ("model", Ridge(alpha=params["model__alpha"])),
         ]
     )
+    logger.info(f"The current pipeline is:\n {pipe}")
 
     X_train, y_train = train.drop(TARGET_COL, axis=1), train[TARGET_COL]
     X_test, y_test = test.drop(TARGET_COL, axis=1), test[TARGET_COL]
 
+    logger.info("Fitting the model")
     pipe.fit(X_train, y_train)
 
     y_pred = pipe.predict(X_test)
@@ -98,67 +107,38 @@ def training_model(path: str, dry_run: bool = False) -> None:
     rmse = mean_squared_error(y_test, y_pred)
     r2 = r2_score(y_test, y_pred)
 
-    logger.info("RMSE:", rmse)
-    logger.info("r2:", r2)
-
     metrics = {
         "RMSE": rmse,
         "r2": r2,
     }
+
+    logger.info(f"metrics: {metrics}")
+
     if dry_run:
         logger.info("Skipping saving")
     else:
         logger.info("Saving best parameters")
         # If there's a previous trained model, first save the previous version
         if os.path.exists(os.path.join(ARTIFACT_DIR, "model/model_metrics.json")):
-            history_artifacts_dir = os.path.join(ARTIFACT_DIR, "model/history", datetime.now())
+            now = datetime.now()
+            history_artifacts_dir = os.path.join(
+                ARTIFACT_DIR, "model/history", now.strftime("%m-%d-%Y_%H:%M:%S")
+            )
             os.makedirs(history_artifacts_dir)
             shutil.copyfile(
-                os.path.join(ARTIFACT_DIR, "model/model_metrics.json"), history_artifacts_dir
+                os.path.join(ARTIFACT_DIR, "model/model_metrics.json"),
+                os.path.join(history_artifacts_dir, "model_metrics.json"),
             )
             shutil.copyfile(
-                os.path.join(ARTIFACT_DIR, "model/model_staging.pkl"), history_artifacts_dir
+                os.path.join(ARTIFACT_DIR, "model/trained_model.pkl"),
+                os.path.join(history_artifacts_dir, "trained_model.json"),
             )
 
         with open(os.path.join(ARTIFACT_DIR, "model/model_metrics.json"), "w") as f:
             json.dump(metrics, f, indent=4)
 
-        joblib.dump(pipe, os.path.join(ARTIFACT_DIR, "model/model_staging.pkl"))
+        joblib.dump(pipe, os.path.join(ARTIFACT_DIR, "model/trained_model.pkl"))
 
 
-def validate_promote_model(artifact_path: str) -> None:
-    """
-    Implements a set of validation for the model to promote it
-    """
-    with open(os.path.join(artifact_path, "model_metrics.json")) as json_file:
-        metrics = json.load(json_file)
-
-    model = joblib.load(os.path.join(artifact_path, "model_staging.pkl"))
-
-    # Dummy validation for RMSE and R2
-    assert metrics["RMSE"] > 0 and metrics["r2"] > 0
-
-    # TO-DO: Validate the last model perform better than the previous model
-    print("Everythin Ok :D")
-
-    joblib.dump(model, os.path.join(artifact_path, "model_prod.pkl"))
-
-
-def batch_prediction_model(artifact_path: str, data_path: str) -> None:
-    """
-    Predict batch data
-    """
-
-    # Read historic features from our feature store
-    features = pd.read_csv(
-        os.path.join(data_path, "feature_store", "super_efficient_feature_store.csv")
-    )
-
-    model = joblib.load(os.path.join(artifact_path, "model_prod.pkl"))
-
-    pred = model.predict(features.drop("Periodo", axis=1))
-    features["preds"] = pred
-
-    features[["Periodo", "preds"]].to_csv(
-        os.path.join(data_path, "batch_predictions", "predictions.csv"), index=False
-    )
+if __name__ == "__main__":
+    fire.Fire(training_model)
