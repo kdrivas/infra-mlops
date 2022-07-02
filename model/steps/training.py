@@ -118,6 +118,7 @@ def training_model(path: str, dry_run: bool = False) -> None:
         logger.info("Skipping saving")
     else:
         logger.info("Saving best parameters")
+
         # If there's a previous trained model, first save the previous version
         if os.path.exists(os.path.join(ARTIFACT_DIR, "model/model_metrics.json")):
             now = datetime.now()
