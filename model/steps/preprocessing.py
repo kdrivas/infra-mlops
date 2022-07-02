@@ -1,20 +1,14 @@
 import os
-import joblib
 import logging
 import pandas as pd
 import fire
-from sklearn.pipeline import Pipeline
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 
 from model.utils.constants import MERGE_COLS, MILK_COLS, BANK_COLS, PREP_COLS
-from model.utils.constants import TARGET_COL, PARAM_GRID
+from model.utils.constants import TARGET_COL
 
 from model.utils.config import MILK_FILE_NAME, PREP_FILE_NAME, BANK_FILE_NAME
 from model.utils.config import MERGED_FILE_NAME
 from model.utils.config import RAW_DIR, INTERM_DIR
-
-from model.utils.data_munging import FixingFormattedString, TakeVariables, RollingTransformer
 
 
 logger = logging.getLogger(__name__)
