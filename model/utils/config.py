@@ -1,6 +1,8 @@
 # Folder config
 RAW_DIR = "raw"
 INTERM_DIR = "interm"
+FEATURE_DIR = "features"
+ARTIFACT_DIR = "artifacts"
 
 # Data path
 MILK_FILE_NAME = "precio_leche"

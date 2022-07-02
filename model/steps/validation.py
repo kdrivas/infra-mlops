@@ -16,9 +16,9 @@ def validate_assets(path: str, dry_run: bool = False) -> None:
     if dry_run:
         logger.info("Dry run activated - Skipping asset validation")
     else:
-        logger.info("Dry run not activated - Running validation")
-        schema_path = os.path.join("model/pipelines", "schema.yaml")
-    
+        logger.info("Dry run is not activated - Running validation")
+        schema_path = "model/schema.yaml"
+
         with open(schema_path, "r") as stream:
             schemas = yaml.safe_load(stream)
 
@@ -26,7 +26,7 @@ def validate_assets(path: str, dry_run: bool = False) -> None:
         for name_schema in schemas:
             logger.debug(f"Validating schema for {name_schema}")
             validator = Validator()
-            input_data_path = os.path.join(path, RAW_DIR, name_schema + ".csv")
+            input_data_path = os.path.join(path, RAW_DIR, f"{name_schema}.csv")
             data = pd.read_csv(input_data_path)
             validator.validate(data.to_dict(orient="list"), schemas[name_schema])
             if validator.errors:

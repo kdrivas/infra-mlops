@@ -1,8 +1,15 @@
 # Model
 PARAM_GRID = {
-    "selector__k": [3, 4, 5, 6, 7, 10], # The best parameters found in the experimentation step (notebooks)
+    "selector__k": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+    ],  # The best parameters found in the experimentation step (notebooks)
     "model__alpha": [1, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01],
-    "poly__degree": [1, 2, 3, 5, 7]
+    "poly__degree": [1, 2, 3, 5, 7],
 }
 
 # Features
@@ -54,7 +61,7 @@ IMACEC_INDICE_COLS = [
     "Imacec_servicios",
     "Imacec_a_costo_de_factores",
     "Imacec_no_minero",
-    "Indice_de_ventas_comercio_real_no_durables_IVCM"
+    "Indice_de_ventas_comercio_real_no_durables_IVCM",
 ]
 
 CITY_COLS = [
@@ -65,16 +72,16 @@ CITY_COLS = [
     "Maule",
     "Biobio",
     "La_Araucania",
-    "Los_Rios"
+    "Los_Rios",
 ]
-    
+
 MILK_COLS = PERIOD_COLS + ["Precio_leche"]
 
 BANK_COLS = PERIOD_COLS + PIB_COLS + IMACEC_INDICE_COLS
 
 PREP_COLS = PERIOD_COLS + CITY_COLS
 
-MERGE_COLS = MILK_COLS + CITY_COLS + PIB_COLS + IMACEC_INDICE_COLS 
+MERGE_COLS = MILK_COLS + CITY_COLS + PIB_COLS + IMACEC_INDICE_COLS
 
 TAKE_VARS = [
     "Precio_leche_rolling3_mean",
