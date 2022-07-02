@@ -1,0 +1,488 @@
+banco_central:
+  Periodo:
+    type: list
+    schema:
+      type: string
+      nullable: True
+  Imacec_empalmado:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Imacec_industria:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Imacec_produccion_de_bienes:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Imacec_minero:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Imacec_resto_de_bienes:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Imacec_comercio:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Imacec_servicios:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Imacec_a_costo_de_factores:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Imacec_no_minero:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Agropecuario_silvicola:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Pesca:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Mineria:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Mineria_del_cobre:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Otras_actividades_mineras:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Industria_Manufacturera:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Alimentos:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Bebidas_y_tabaco:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Textil:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Maderas_y_muebles:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Celulosa:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Refinacion_de_petroleo:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Quimica:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Minerales_no_metalicos_y_metalica_basica:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Productos_metalicos:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Electricidad:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Construccion:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Comercio:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Restaurantes_y_hoteles:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Transporte:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Comunicaciones:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Servicios_financieros:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Servicios_empresariales:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Servicios_de_vivienda:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Servicios_personales:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_Administracion_publica:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB_a_costo_de_factores:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Impuesto_al_valor_agregado:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Derechos_de_Importacion:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  PIB:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Precio_de_la_gasolina_en_EEUU_dolaresm3:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Precio_de_la_onza_troy_de_oro_dolaresoz:
+    type: list
+    schema:
+      type: float
+      nullable: True
+      min: 0
+  Precio_de_la_onza_troy_de_plata_dolaresoz:
+    type: list
+    schema:
+      type: float
+      nullable: True
+      min: 0
+  Precio_del_cobre_refinado_BML_dolareslibra:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Precio_del_diesel_centavos_de_dolargalon:
+    type: list
+    schema:
+      type: float
+      nullable: True
+      min: 0
+  Precio_del_gas_natural_dolaresmillon_de_unidades_termicas_britanicas:
+    type: list
+    schema:
+      type: float
+      nullable: True
+      min: 0
+  Precio_del_petroleo_Brent_dolaresbarril:
+    type: list
+    schema:
+      type: float
+      nullable: True
+  Precio_del_kerosene_dolaresm3:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Precio_del_petroleo_WTI_dolaresbarril:
+    type: list
+    schema:
+      type: float
+      nullable: True
+  Precio_del_propano_centavos_de_dolargalon_DTN:
+    type: list
+    schema:
+      type: float
+      nullable: True
+  Tipo_de_cambio_del_dolar_observado_diario:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupados:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Agricultura_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Explotacion_de_minas_y_canteras_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Industrias_manufactureras_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Suministro_de_electricidad_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Actividades_de_servicios_administrativos_y_de_apoyo_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Actividades_profesionales_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Actividades_inmobiliarias_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Actividades_financieras_y_de_seguros_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Informacion_y_comunicaciones_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Transporte_y_almacenamiento_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Actividades_de_alojamiento_y_de_servicio_de_comidas_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Construccion_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Comercio_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Suministro_de_agua_evacuacion_de_aguas_residuales_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Administracion_publica_y_defensa_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Enseanza_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Actividades_de_atencion_de_la_salud_humana_y_de_asistencia_social_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Actividades_artisticas_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Otras_actividades_de_servicios_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Actividades_de_los_hogares_como_empleadores_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ocupacion_en_Actividades_de_organizaciones_y_organos_extraterritoriales_INE:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  No_sabe__No_responde_Miles_de_personas:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Tipo_de_cambio_nominal_multilateral___TCM:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Indice_de_tipo_de_cambio_real___TCR_promedio_1986_100:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Indice_de_produccion_industrial:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Indice_de_produccion_industrial__mineria:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Indice_de_produccion_industrial_electricidad__gas_y_agua:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Indice_de_produccion_industrial__manufacturera:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Generacion_de_energia_electrica_CDEC_GWh:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Indice_de_ventas_comercio_real_IVCM:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Indice_de_ventas_comercio_real_no_durables_IVCM:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Indice_de_ventas_comercio_real_durables_IVCM:
+    type: list
+    schema:
+      type: [string, float]
+      nullable: True
+  Ventas_autos_nuevos:
+    type: list
+    schema:
+      type: float
+      min: 0
+      nullable: True
+precio_leche:
+  Anio:
+    type: list
+    schema:
+      type: integer
+      nullable: True
+      min: 1000
+  Mes:
+    type: list
+    schema:
+      type: string
+      nullable: True
+      min: 1000
+  Precio_leche:
+    type: list
+    schema:
+      type: float
+      nullable: True
+      min: 0
+precipitaciones:
+  date:
+    type: list
+    schema:
+      type: string
+  Coquimbo:
+    type: list
+    schema:
+      type: float
+  Valparaiso:
+    type: list
+    schema:
+      type: float
+  Metropolitana_de_Santiago:
+    type: list
+    schema:
+      type: float
+  Libertador_Gral__Bernardo_O_Higgins:
+    type: list
+    schema:
+      type: float
+  Maule:
+    type: list
+    schema:
+      type: float
+  Biobio:
+    type: list
+    schema:
+      type: float
+  La_Araucania:
+    type: list
+    schema:
+      type: float
+  Los_Rios:
+    type: list
+    schema:
+      type: float
+  
