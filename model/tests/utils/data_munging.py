@@ -3,7 +3,6 @@ import pandas as pd
 from model.utils.data_munging import (
     FixingFormattedString,
     TakeVariables,
-    RollingTransformer,
 )
 
 
