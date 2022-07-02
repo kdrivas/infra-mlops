@@ -151,7 +151,7 @@ def preprocess_assets(path: str, dry_run: bool = False) -> None:
     collect_bank_data(path, dry_run)
 
     logger.debug("Creating intermediate data")
-    merge_data(path)
+    merge_data(path, dry_run)
 
 
 if __name__ == "__main__":
