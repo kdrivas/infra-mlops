@@ -23,7 +23,7 @@ from model.utils.config import ARTIFACT_DIR, FEATURE_DIR
 logger = logging.getLogger(__name__)
 
 
-def hypertune_model(path: str, dry_run: bool = False) -> None:
+def hypertune_model(base_path: str, dry_run: bool = False) -> None:
     """
     This function will train the model using the preprocessed data (train and test sets)
     Once the model is trained, the metrics and the serialized model is stored in the artifact_path
@@ -35,7 +35,7 @@ def hypertune_model(path: str, dry_run: bool = False) -> None:
         logger.info("Dry run is not activated - Running hypertune")
     logger.info("=======================================================")
 
-    train = pd.read_csv(os.path.join(path, FEATURE_DIR, "train.csv"))
+    train = pd.read_csv(os.path.join(base_path, FEATURE_DIR, "train.csv"))
 
     pipe = Pipeline(
         [
@@ -61,11 +61,11 @@ def hypertune_model(path: str, dry_run: bool = False) -> None:
         logger.info("Skipping saving")
     else:
         logger.info("Saving best parameters")
-        with open(os.path.join(ARTIFACT_DIR, "params/best_params.json"), "w") as f:
+        with open(os.path.join(base_path, ARTIFACT_DIR, "params/best_params.json"), "w") as f:
             json.dump(best_params, f, indent=4)
 
 
-def training_model(path: str, dry_run: bool = False) -> None:
+def training_model(base_path: str, dry_run: bool = False) -> None:
     """
     This function will train the model using the preprocessed data (train and test sets)
     Once the model is trained, the metrics and the serialized model is stored in the artifact_path
@@ -77,10 +77,10 @@ def training_model(path: str, dry_run: bool = False) -> None:
         logger.info("Dry run is not activated - Running training")
     logger.info("=======================================================")
 
-    train = pd.read_csv(os.path.join(path, FEATURE_DIR, "train.csv"))
-    test = pd.read_csv(os.path.join(path, FEATURE_DIR, "test.csv"))
+    train = pd.read_csv(os.path.join(base_path, FEATURE_DIR, "train.csv"))
+    test = pd.read_csv(os.path.join(base_path, FEATURE_DIR, "test.csv"))
 
-    with open(os.path.join(ARTIFACT_DIR, "params/best_params.json")) as f:
+    with open(os.path.join(base_path, ARTIFACT_DIR, "params/best_params.json")) as f:
         params = json.load(f)
 
     # Prediction pipeline
@@ -120,25 +120,25 @@ def training_model(path: str, dry_run: bool = False) -> None:
         logger.info("Saving best parameters")
 
         # If there's a previous trained model, first save the previous version
-        if os.path.exists(os.path.join(ARTIFACT_DIR, "model/model_metrics.json")):
+        if os.path.exists(os.path.join(base_path, ARTIFACT_DIR, "model/model_metrics.json")):
             now = datetime.now()
             history_artifacts_dir = os.path.join(
-                ARTIFACT_DIR, "model/history", now.strftime("%m-%d-%Y_%H:%M:%S")
+                base_path, ARTIFACT_DIR, "model/history", now.strftime("%m-%d-%Y_%H:%M:%S")
             )
             os.makedirs(history_artifacts_dir)
             shutil.copyfile(
-                os.path.join(ARTIFACT_DIR, "model/model_metrics.json"),
+                os.path.join(base_path, ARTIFACT_DIR, "model/model_metrics.json"),
                 os.path.join(history_artifacts_dir, "model_metrics.json"),
             )
             shutil.copyfile(
-                os.path.join(ARTIFACT_DIR, "model/trained_model.pkl"),
+                os.path.join(base_path, ARTIFACT_DIR, "model/trained_model.pkl"),
                 os.path.join(history_artifacts_dir, "trained_model.json"),
             )
 
-        with open(os.path.join(ARTIFACT_DIR, "model/model_metrics.json"), "w") as f:
+        with open(os.path.join(base_path, ARTIFACT_DIR, "model/model_metrics.json"), "w") as f:
             json.dump(metrics, f, indent=4)
 
-        joblib.dump(pipe, os.path.join(ARTIFACT_DIR, "model/trained_model.pkl"))
+        joblib.dump(pipe, os.path.join(base_path, ARTIFACT_DIR, "model/trained_model.pkl"))
 
 
 if __name__ == "__main__":

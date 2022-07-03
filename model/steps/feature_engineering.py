@@ -20,7 +20,7 @@ from model.utils.data_munging import (
 logger = logging.getLogger(__name__)
 
 
-def feature_engineering(path: str, dry_run: bool = False) -> None:
+def feature_engineering(base_path: str, dry_run: bool = False) -> None:
     """
     This function will execute the data preprocessing and serialize the data pipeline
     """
@@ -58,7 +58,7 @@ def feature_engineering(path: str, dry_run: bool = False) -> None:
     logger.info(f"The current pipeline is:\n {pipe}")
 
     # Read the data and set the period as index
-    df_merge = pd.read_csv(os.path.join(path, INTERM_DIR, f"{MERGED_FILE_NAME}.csv"))
+    df_merge = pd.read_csv(os.path.join(base_path, INTERM_DIR, f"{MERGED_FILE_NAME}.csv"))
     df_merge["Periodo"] = df_merge.apply(lambda x: str(int(x.anio)) + "-" + str(int(x.mes)), axis=1)
     df_merge.set_index("Periodo", inplace=True)
 
@@ -80,11 +80,11 @@ def feature_engineering(path: str, dry_run: bool = False) -> None:
 
     if not dry_run:
         logger.info("Saving features")
-        df_prec_train.to_csv(os.path.join(path, FEATURE_DIR, "train.csv"), index=False)
-        df_prec_test.to_csv(os.path.join(path, FEATURE_DIR, "test.csv"), index=False)
+        df_prec_train.to_csv(os.path.join(base_path, FEATURE_DIR, "train.csv"), index=False)
+        df_prec_test.to_csv(os.path.join(base_path, FEATURE_DIR, "test.csv"), index=False)
 
         logger.info("Saving data pipeline")
-        joblib.dump(pipe, os.path.join(ARTIFACT_DIR, "data_pipeline.pkl"))
+        joblib.dump(pipe, os.path.join(base_path, ARTIFACT_DIR, "data_pipeline.pkl"))
 
 
 if __name__ == "__main__":

@@ -9,26 +9,26 @@ from sklearn.base import BaseEstimator, TransformerMixin
 
 class TakeVariables(BaseEstimator, TransformerMixin):
     """
-        Take a list of existing variables from the dataframe
+    Take a list of existing variables from the dataframe
     """
 
-    def __init__(self, cols: list):
+    def __init__(self, cols: list = []):
         assert len(cols) > 0
-        self.columns = cols
+        self.cols = cols
 
     def fit(self, X: pd.DataFrame, y=None):
         return self
 
     def transform(self, X: pd.DataFrame):
         X = X.copy()
-        valid_cols = [col for col in self.columns if col in X.columns]
+        valid_cols = [col for col in self.cols if col in X.columns]
         X = X[valid_cols]
         return X
 
 
 class DropNaTransformer(BaseEstimator, TransformerMixin):
     """
-        Take a list of existing variables from the dataframe
+    Take a list of existing variables from the dataframe
     """
 
     def __init__(self, cols: list = []):
@@ -45,7 +45,7 @@ class DropNaTransformer(BaseEstimator, TransformerMixin):
 
 class FixingFormattedString(BaseEstimator, TransformerMixin):
     """
-        Fix financial numbers 
+    Fix financial numbers
     """
 
     def __init__(self, cols: list, cols_type: str):
@@ -76,16 +76,14 @@ class FixingFormattedString(BaseEstimator, TransformerMixin):
     def transform(self, X: pd.DataFrame):
         X = X.copy()
         for col in self.cols:
-            if col in X.columns and (
-                X[col].dtypes == "str" or X[col].dtypes == "object"
-            ):
+            if col in X.columns and (X[col].dtypes == "str" or X[col].dtypes == "object"):
                 X[col] = X[col].apply(lambda x: self.casting_finance(x))
         return X
 
 
 class RollingTransformer(BaseEstimator, TransformerMixin):
     """
-        Perform rolling or shift operations over a set of existing variables
+    Perform rolling or shift operations over a set of existing variables
     """
 
     def __init__(self, cols: list, method: str = "mean", window_size: int = 3):

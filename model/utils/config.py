@@ -1,7 +1,7 @@
 # Folder config
-RAW_DIR = "raw"
-INTERM_DIR = "interm"
-FEATURE_DIR = "features"
+RAW_DIR = "data/raw"
+INTERM_DIR = "data/interm"
+FEATURE_DIR = "data/features"
 ARTIFACT_DIR = "artifacts"
 
 # Data path
