@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 # Only load the artifacts the first time
 logger.info("Loading artifacts")
-model_pipe = joblib.load("/opt/artifacts/model_prod.pkl")
+model_pipe = joblib.load("/opt/artifacts/model/trained_model.pkl")
 data_pipe = joblib.load("/opt/artifacts/data_pipeline.pkl")
 
 app = FastAPI()
@@ -26,7 +26,7 @@ def root() -> Dict:
 
 
 @app.post("/get_prediction", status_code=status.HTTP_201_CREATED)
-async def send_online_data(payload: Dict) -> Dict:
+async def get_prediction(payload: Dict) -> Dict:
     """
     Get the prediction for the requested data
     Input:
