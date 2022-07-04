@@ -82,8 +82,8 @@ curl --location --request GET 'localhost:8090/check_service'
 }
 ```
 
-### Predicion
-Consultar algun periodo existente dentro de la base de datos de prediccion
+### Prediccion
+Consultar por la prediccion de los datos enviados
 
 **URL** : `localhost:8090/get_prediction`
 
