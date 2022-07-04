@@ -58,6 +58,7 @@ Stack: Airflow + Fastapi
 - El segundo dag (2_hypertune_training.py) se encarga de entrenar el modelo y encontrar los mejores parametros para el mismo. Asi mismo, crea los artefactos necesarios para que sean usados por el servicio.
 <img src="docs/dag_2.png" >
 
+## Endpoint
 ### Health check
 Consultar a esta ruta para verificar que el api este activo
 
@@ -84,14 +85,14 @@ curl --location --request GET 'localhost:8090/check_service'
 ### Predicion
 Consultar algun periodo existente dentro de la base de datos de prediccion
 
-**URL** : `localhost:8090/api/v1/get_prediction`
+**URL** : `localhost:8090/get_prediction`
 
 **Method** : `POST`
 
 #### Ejemplo
 
 ```
-curl --location --request POST 'localhost:8090/api/v1/get_prediction' \
+curl --location --request POST 'localhost:8090/get_prediction' \
 --header 'Content-Type: application/json' \
 --data-raw ' {"data": {
         "anio": [2014.0, 2014.0, 2014.0],
